@@ -30,4 +30,14 @@ class PostsController extends AbstractController
             'posts' => $posts
         ]);
     }
+
+    /**
+     * @Route("/posts/{slug}", name="blog_show")
+     */
+    public function post(Post $post)
+    {
+        return $this->render('posts/show.html.twig', [
+            'post' => $post
+        ]);
+    }
 }
