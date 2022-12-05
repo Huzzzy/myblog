@@ -1,41 +1,36 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\PostRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\DateType;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[Id]
+    #[Column(type: 'integer')]
+    #[GeneratedValue]
+    private int|null $id = null;
 
-    /**
-     * @ORM\Column(type="string", nullable=false)
-     * @Assert\Length(min=10, max=255)
-     */
+     #[ORM\Column(type: 'string', nullable: false)]
+     #[Assert\Length(min: 10, max: 255)]
     private $title;
 
-    /**
-     * @ORM\    Column(type="text", nullable=false)
-     */
+     #[ORM\Column(type: 'text', nullable: false)]
     private $body;
 
-    /**
-     * @ORM\Column(type="string", nullable=false)
-     */
+     #[ORM\Column(type: 'string', nullable:false)]
     private $slug;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+     #[ORM\Column(type: 'datetime')]
     private $created_at;
 
     
