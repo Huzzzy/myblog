@@ -18,4 +18,16 @@ class PostsController extends AbstractController
     {
         $this->postRepository = $postRepository;
     }
+
+    /**
+     * @Route("/posts", name="blog_posts")
+     */
+    public function posts()
+    {
+        $posts = $this->postRepository->findAll();
+
+        return $this->render('posts/index.html.twig', [
+            'posts' => $posts
+        ]);
+    }
 }
