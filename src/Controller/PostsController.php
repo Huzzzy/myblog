@@ -62,6 +62,28 @@ class PostsController extends AbstractController
     }
 
     /**
+     * @Route("/posts/{slug}/edit", name="blog_post_edit")
+     */
+    public function edit(Post $post, Request $request, Slugify $slugify)
+    {
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $post->setSlug($slugify->slugify($post->getTitle()));
+            $em = $this->doctrine->getManager();
+            $em->flush();
+
+            return $this->redirectToRoute('blog_show', [
+                'slug' => $post->getSlug()
+            ]);
+        }
+
+        return $this->render('posts/new.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+    /**
      * @Route("/posts/{slug}", name="blog_show")
      */
     public function post(Post $post)
