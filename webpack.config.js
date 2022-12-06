@@ -56,6 +56,10 @@ Encore
         config.corejs = '3.23';
     })
 
+
+    .addEntry('js/app', './assets/js/app.js')
+    .addStyleEntry('css/app', './assets/css/app.css')
+
     // enables Sass/SCSS support
     //.enableSassLoader()
 
@@ -72,18 +76,5 @@ Encore
     // uncomment if you're having problems with a jQuery plugin
     //.autoProvidejQuery()
 ;
-
-var Encore = require('@symfony/webpack-encore');
-
-Encore
-
-    .setOutputPath('public/build/')
-    .setPublicPath('/build')
-
-    .cleanupOutputBeforeBuild()
-    .enableSourceMaps(!Encore.isProduction())
-
-    .addEntry('js/app', './assets/js/app.js')
-    .addStyleEntry('css/app', './assets/css/app.css');
 
 module.exports = Encore.getWebpackConfig();
