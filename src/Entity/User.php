@@ -7,12 +7,20 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Table(name="user")
+ * @UniqueEntity(fields={"email"}, message="У вас уже есть аккаунт")
+ */
 class User implements UserInterface
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    /**
+     * @var int
+     *
+     * @ORM\Id()
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
     private ?int $id = null;
 
     /**
@@ -45,34 +53,81 @@ class User implements UserInterface
      */
     private $roles = [];
 
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     public function getRoles(): array
     {
-        // TODO: Implement getRoles() method.
+        return [
+            'ROLE_USER'
+        ];
     }
 
     public function getPassword()
     {
-        // TODO: Implement getRoles() method.
+        return $this->password;
     }
 
     public function getSalt()
     {
-        // TODO: Implement getRoles() method.
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
     }
 
     public function eraseCredentials()
     {
-        // TODO: Implement eraseCredentials() method.
+        $this->plainPassword = null;
     }
 
-    public function getUserIdentifier(): string
+    /**
+     * @return string
+     */
+    public function getEmail()
     {
-        // TODO: Implement getUserIdentifier() method.
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     *
+     * @return $this
+     */
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string $plainPassword
+     *
+     * @return User
+     */
+    public function setPlainPassword(string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
     }
 }
