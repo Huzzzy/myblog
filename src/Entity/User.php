@@ -13,6 +13,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  
 class User implements UserInterface
 {
+
+    public const ROLE_USER = 'ROLE_USER';
+
+
+
+
+
     /**
      * @var int
      */
@@ -65,6 +72,15 @@ class User implements UserInterface
      #[ORM\Column(type: "boolean")]
     
     private $enabled;
+
+
+
+    
+    public function __construct()
+    {
+        $this->roles = [self::ROLE_USER];
+        $this->enabled = false;
+    }
 
 
 
