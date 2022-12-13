@@ -7,50 +7,49 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ORM\Table(name="user")
- * @UniqueEntity(fields={"email"}, message="У вас уже есть аккаунт")
- */
+
+  #[ORM\Entity(repositoryClass: "App\Repository\UserRepository")]
+  #[ORM\Table(name: "user")]
+ 
 class User implements UserInterface
 {
     /**
      * @var int
-     *
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
+      #[ORM\Id()]
+      #[ORM\GeneratedValue(strategy: "AUTO")]
+      #[ORM\Column(type: "integer")]
+     
     private ?int $id = null;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Email()
      */
+     #[ORM\Column(type: "string", unique: true)]
+     #[Assert\NotBlank()]
+     #[Assert\Email()]
+     
     private $email;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string")
      */
+     #[ORM\Column(type: "string")]
+    
     private $password;
 
     /**
      * @var string
-     *
-     * @Assert\NotBlank()
      */
+     #[Assert\NotBlank()]
+     
     private $plainPassword;
 
     /**
      * @var array
-     *
-     * @ORM\Column(type="json_array")
      */
+    #[ORM\Column(type: "array")]
+     
     private $roles = [];
 
     public function getRoles(): array
